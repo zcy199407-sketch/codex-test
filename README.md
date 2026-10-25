@@ -1,57 +1,59 @@
 # 青禾云课
 
-青禾云课中文课程签到演示网页。使用 HTML、CSS、JavaScript 和浏览器本地存储，无安装依赖、账号、服务器或真实学员信息。
+纯静态中文课程签到演示系统，使用浏览器 localStorage。全部学员为虚构测试身份，没有真实学员信息，也没有身份认证、管理员权限隔离或密码。
 
-## Windows 打开方法
+## 学员端与管理员端
 
-在 GitHub 仓库打开 `checkin.html`，点击 **Download raw file（下载原始文件）**，将文件保存到桌面，再用 Edge 或 Chrome 双击打开。只需这一个文件，不要另存为 .txt。尽量保持同一浏览器和文件位置。
+- `index.html`：学员端，含课程选择、虚构学员切换、签到、个人统计、个人记录、课程筛选和 CSV 导出。
+- `admin.html`：独立管理员演示页面，含各课程今日签到、累计人次、参与人数、所有测试学员记录、课程筛选及 CSV 导出。
+- `checkin.html`：兼容旧入口，与学员端内容相同，可通过导航进入管理员端。
+- 管理员端的“课程管理”“签到规则设置”仅为禁用的预留界面，没有实现编辑、签到时间或定位限制。
 
-当前 Codex 环境未提供网页预览或端口转发入口。云端 Chromium 禁止 file:// 访问，因此直接双击方式尚未在 Windows 验证；开发版与单文件版均已通过 HTTP 的真实浏览器功能检查。
+保留每天每位测试学员每门课签到一次的原有规则。尚未实现身份认证，任何访问者都可打开管理员演示页面。页面分离不是访问权限隔离。
 
-如浏览器禁止本地文件存储，且 Windows 已装 Python，可在保存 HTML 的文件夹中打开 Windows 命令提示符运行：
+## Windows 下载与 Cloudflare Pages 更新（无需命令行）
 
-```bat
-py -m http.server 8000 --bind 127.0.0.1
+推荐在 GitHub 仓库首页选择 **Code → Download ZIP**，下载并解压，在解压出的项目中找到 **pages-upload** 文件夹。只上传该文件夹，不要上传整个仓库。
+
+这个文件夹必须包含以下三个完整网页文件，且上传后它们处于网站根目录：
+
+```text
+pages-upload/
+  index.html
+  admin.html
+  checkin.html
 ```
 
-保留窗口，在同一台 Windows 电脑浏览器中输入 `http://127.0.0.1:8000/checkin.html`。命令应运行在 Windows 本机，而不是 Codex 云端；localhost 始终指当前电脑。无需为此专门安装 Python，优先使用单文件。
+每个 HTML 已内嵌完整样式和脚本，不需要下载额外 CSS、JavaScript 或小程序文件，不用安装软件或配置构建命令。也可在 GitHub 分别打开这三个文件，点击 Download raw file 下载到 Windows 同一文件夹，保持文件名不变。不要另存为 .txt。
 
-## 演示步骤
+如需更新 Cloudflare，请由你在现有 Pages 项目中创建新部署，上传完整 pages-upload 文件夹。不要新建项目、改域名或更改部署设置，本次代码更新不会自动部署。不要继续使用之前仅包含一个 HTML 的旧上传包；新管理员页面需要 admin.html。
 
-1. “学员签到”选择“测试学员01”等虚构身份。不提供真实姓名输入框。
-2. 选择书法、舞蹈或声乐，点击确认签到。同一学员每天每门课只允许一次，不同课程分别记录。
-3. 切换学员，查看该虚构学员的累计签到、参与课程数及今日签到数。
-4. 点击“管理统计”，查看每门课的今日签到人次、累计签到人次、累计参与人数（按虚构学员去重）。
-5. 在记录区按课程筛选，再点“导出 CSV”。学员视图导出当前学员，管理视图导出全部测试学员，均遵循课程筛选。
+发布后的学员入口是原网站根路径 `/`，管理员入口是同一网站的 `/admin.html`（Cloudflare 也可能自动规范化为 `/admin`）。原 `/checkin.html` 入口保留。导航是相对链接，没有个人用户名或 GitHub 链接，不会改变现有域名。
 
-首次打开预置 5 位虚构学员、4 条示例签到（书法两条、舞蹈一条、声乐一条），示例日期按第一次打开时的设备日期生成，并保存到浏览器。预置记录不是实际签到。所有页面、导出文件均标注测试数据。
+## 同步与原数据保护
 
-## 范围和数据
+学员端和管理员端必须使用**同一浏览器配置文件、同一网站来源（协议、域名和端口）**，才能共享记录。新页面在签到、切换页面、返回页面及其他标签页产生存储事件时更新记录。
 
-管理视图仅用于演示，不含管理员登录或权限隔离，任何使用者可查看当前浏览器内的测试数据。不联网、不读取真实学员信息。旧个人打卡版代码保留在云端工作区，课程系统使用独立存储键 `culture-palace-demo-v1`，不读取或覆盖旧版记录。
+统一使用 `qhyun-class-demo-v1`。兼容读取旧课程版使用的 `culture-palace-demo-v1`，若两份数据均存在，会按学员、课程、日期、时间合并去重，保留独有记录，旧存储键不删除。旧键是内部兼容标识，不是具体单位信息。不同时间的历史记录不会因同日同课而被删除。读取异常不会用虚构种子覆盖原存储。
 
-清理浏览器数据、换浏览器、换设备或切换文件位置/网址可能导致记录不可见或丢失，请定期导出；本版没有 CSV 导入。时间取自设备，未实现防代签、课程报名资格或跨设备同步；请勿用于正式考勤。多个标签页不保证同时写入一致性，建议一次只用一个标签页。存储异常会停用写入保护已有数据。
+首次使用且没有任何原记录时，生成原有的 5 位虚构学员及 4 条示例记录；已有空记录列表也不会强行重置。更新同一域名通常保留 localStorage；清理浏览器数据、换浏览器或换域名不会自动迁移数据，建议更新前先导出 CSV（本版暂无导入）。不要在两个不同页面的 file:// 模式下依赖共享存储：不同浏览器可能隔离本地文件。要验证两端同步，优先在同一个网站域名下打开。
+
+记录只在当前浏览器，不跨设备，不是多人共享后台。多个窗口同时写入没有数据库事务保证，建议逐次操作；写入前会重读最新记录，减少陈旧页面覆盖其他页面数据的风险。没有服务端、时间限制、定位或防代签；时间取自设备，请勿用于正式考勤。
+
+## 本地体验（可选）
+
+Windows 可将三个 HTML 保存在同一文件夹后双击 index.html 查看。file:// 方式在当前云端浏览器被管理策略禁止，未作验证；两端共享本地数据应通过同源网站验证。若 Windows 已有 Python，可在该文件夹命令提示符运行 `py -m http.server 8000 --bind 127.0.0.1`，保留窗口，用同一台 Windows 的浏览器打开 `http://127.0.0.1:8000/`。无需专门为此安装 Python。Codex 云端的 localhost 不是 Windows 的 localhost。
 
 ## 开发与测试
 
-- `index.html`、`styles.css`、`web.js`：网页界面与交互。
-- `course-model.js`：课程、虚构学员、去重规则、课程统计和 CSV。
-- `miniprogram/utils/checkin.js`：复用并保留的原签到模型、日期工具。
-- `checkin.html`：独立体验文件，运行无需其他文件或工具。
-- `scripts/build-standalone.cjs`：开发者运行 `node scripts/build-standalone.cjs` 重新生成独立文件。普通使用者无需运行。
+- `templates/student.html`、`templates/admin.html`：两个独立页面模板。
+- `web.js`：页面交互；`storage.js`：共用存储及旧数据兼容。
+- `course-model.js`：保留课程、签到、统计、CSV 规则。
+- `styles.css`：两个页面共用的手机与电脑样式。
+- `miniprogram/utils/checkin.js`：复用日期及原始签到工具。
+- `scripts/build-standalone.cjs`：执行 `node scripts/build-standalone.cjs` 更新根目录及 pages-upload 中的三个独立 HTML。普通使用者无需运行。
 
-规则测试（需要已安装 Node.js）：
+规则和存储测试：`node --test tests/course.test.js tests/storage.test.js`。
+浏览器测试：`node tests/browser.cjs`；使用 `CHECKIN_ENTRY=checkin.html node tests/browser.cjs` 检查兼容入口。使用 `SITE_DIR=pages-upload node tests/browser.cjs` 检查实际上传目录（Linux 命令示例）。浏览器测试需要开发环境已有 Playwright、Python 3 和 Chromium，这些不是网页运行依赖。
 
-```sh
-node --test tests/course.test.js
-```
-
-浏览器集成测试（仅开发者测试环境需要 Playwright、Python 3 和 Chromium，可通过 CHROMIUM_PATH 指定 Chromium）：
-
-```sh
-node tests/browser.cjs
-```
-
-单文件版测试可在 Linux 命令行运行 `CHECKIN_ENTRY=checkin.html node tests/browser.cjs`。测试覆盖课程选择、不同课程及不同学员去重、跨日、统计、筛选、CSV 下载、刷新保留、手机布局、写入失败及损坏数据保护。使用网页不需要安装这些测试工具。
-
-直接使用现有仓库，无需额外 Git worktree。
+直接使用已有仓库，无需额外 Git worktree。

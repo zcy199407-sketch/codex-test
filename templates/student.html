@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#246b56"><title>青禾云课 · 学员端</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="miniprogram/utils/checkin.js"></script>
+<script defer src="course-model.js"></script>
+<script defer src="storage.js"></script>
+<script defer src="web.js"></script>
+</head>
+<body data-page="student">
+<header class="topbar"><a class="brand" href="./"><span class="brand-icon">青</span><span class="system-name">青禾云课</span></a><span class="local-tag">虚构数据演示</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">一起学习，一起成长</p><h1>相约青禾云课，乐享学习时光<span>。</span></h1><p class="subtitle">让每一次学习与相聚，都有迹可循。</p></div><div class="date-card"><span id="date"></span><strong id="clock"></strong></div></section>
+<div class="demo-banner">演示版 · 所有学员及签到均为虚构测试数据，仅保存在当前浏览器。尚未实现身份认证，请勿输入真实学员信息。</div>
+<nav class="view-switch" aria-label="页面导航"><a class="primary" href="index.html" aria-current="page">学员端</a><a class="secondary" href="admin.html" >管理员端</a></nav>
+<section id="student-panel">
+<div class="workspace"><aside><section class="panel profile"><div class="avatar">青</div><h2>欢迎来到青禾云课</h2><p>选择一位测试学员，体验课程签到。</p><label for="learner">虚构测试学员</label><select id="learner"></select><span class="profile-note">此处仅切换演示身份，无需注册登录</span></section><section class="storage-note"><span>◎</span><div><strong>签到规则</strong><p>每位学员每天每门课程可签到一次。不同课程分别记录，切换身份后可继续测试。</p></div></section></aside>
+<div class="content"><section class="stats" aria-label="当前测试学员统计"><div><span>累计课程签到</span><strong id="total">0</strong><small>当前测试学员</small></div><div><span>参与课程数</span><strong id="days">0</strong><small>已签到的不同课程</small></div><div><span>今日签到</span><strong id="today-count">0</strong><small>今日完成课程数</small></div></section>
+<section class="panel checkin-panel"><div class="section-top"><h2>选择今天的课程</h2><span class="pill">课程签到</span></div><p class="muted">先选择课程，再点击下方按钮完成签到。</p><fieldset class="course-options"><legend class="sr-only">请选择课程</legend><div id="courses"></div></fieldset><div class="action-row"><span class="rule" id="course-hint">尚未选择课程</span><button class="primary" id="course-sign" disabled>请先选择课程</button></div><p class="identity-hint" id="identity-hint"></p></section></div></div>
+</section>
+<section class="panel records-panel"><div class="records-head"><div><p class="eyebrow">记录每一次学习</p><h2><span id="records-title">我的课程签到记录</span> <span id="record-count"></span></h2></div><button class="secondary" id="export">↓ 导出 CSV</button></div><div class="filters"><label for="filter">课程筛选</label><select id="filter"><option value="all">全部课程</option></select><span id="scope-hint">当前测试学员 · 导出当前筛选结果</span></div><div class="table-wrap"><table><thead><tr><th>测试学员</th><th>课程</th><th>日期</th><th>签到时间</th><th>状态</th></tr></thead><tbody id="records"></tbody></table></div><div class="empty" id="empty"><span>▤</span><h3>还没有这门课程的签到记录</h3><p>选择课程完成签到，记录就会出现在这里。</p></div></section>
+<footer><span>青禾云课 · 学有所乐，学有所获。</span><span>虚构测试数据 · 浏览器本地存储 · 使用设备时间</span></footer>
+</main><div id="message" role="status" aria-live="polite" hidden></div>
+</body></html>

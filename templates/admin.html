@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#246b56"><title>青禾云课 · 管理员端</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="miniprogram/utils/checkin.js"></script>
+<script defer src="course-model.js"></script>
+<script defer src="storage.js"></script>
+<script defer src="web.js"></script>
+</head>
+<body data-page="admin">
+<header class="topbar"><a class="brand" href="./"><span class="brand-icon">青</span><span class="system-name">青禾云课</span></a><span class="local-tag">虚构数据演示</span></header>
+<main>
+<section class="intro"><div><p class="eyebrow">一起学习，一起成长</p><h1>课程与签到，一目了然<span>。</span></h1><p class="subtitle">汇总本浏览器的虚构测试数据，便于体验管理流程。</p></div><div class="date-card"><span id="date"></span><strong id="clock"></strong></div></section>
+<div class="demo-banner">演示版 · 所有学员及签到均为虚构测试数据，仅保存在当前浏览器。请勿输入真实学员信息。</div>
+<nav class="view-switch" aria-label="页面导航"><a class="secondary" href="index.html" >学员端</a><a class="primary" href="admin.html" aria-current="page">管理员端</a></nav>
+<section id="admin-panel"><div class="admin-notice">管理演示视图 · 尚未实现身份认证，无管理员登录或权限隔离，所有使用者均可查看本浏览器内的虚构记录。</div><section class="panel checkin-panel"><div class="section-top"><h2>课程签到概览</h2><span class="pill">本浏览器全部测试数据</span></div><p class="muted">每张卡片展示该课程的今日签到、累计人次和累计参与人数。</p><div id="course-stats" class="course-stats"></div></section></section>
+<section class="panel records-panel"><div class="records-head"><div><p class="eyebrow">记录每一次学习</p><h2><span id="records-title">全部测试学员签到记录</span> <span id="record-count"></span></h2></div><button class="secondary" id="export">↓ 导出 CSV</button></div><div class="filters"><label for="filter">课程筛选</label><select id="filter"><option value="all">全部课程</option></select><span id="scope-hint">全部测试学员 · 导出当前筛选结果</span></div><div class="table-wrap"><table><thead><tr><th>测试学员</th><th>课程</th><th>日期</th><th>签到时间</th><th>状态</th></tr></thead><tbody id="records"></tbody></table></div><div class="empty" id="empty"><span>▤</span><h3>还没有这门课程的签到记录</h3><p>选择课程完成签到，记录就会出现在这里。</p></div></section>
+<section class="future-grid" aria-label="后续功能预留"><article class="panel future-card"><span class="pill">界面预留 · 尚未开发</span><h2>课程管理</h2><p>后续可在此维护课程信息。本阶段保留现有演示课程。</p><button class="secondary" disabled>课程管理（暂不可用）</button></article><article class="panel future-card"><span class="pill">界面预留 · 尚未开发</span><h2>签到规则设置</h2><p>本阶段未新增签到时间或定位限制，现有签到规则保持不变。</p><button class="secondary" disabled>规则设置（暂不可用）</button></article></section>
+<footer><span>青禾云课 · 学有所乐，学有所获。</span><span>虚构测试数据 · 浏览器本地存储 · 使用设备时间</span></footer>
+</main><div id="message" role="status" aria-live="polite" hidden></div>
+</body></html>
