@@ -65,7 +65,7 @@ $('filter').addEventListener('change',render)
 $('export').addEventListener('click',()=>{
  const records=selected();if(!records.length)return
  const url=URL.createObjectURL(new Blob([m.csv(records)],{type:'text/csv;charset=utf-8;'})),a=document.createElement('a')
- a.href=url;a.download='文化宫课程签到-虚构测试数据-'+m.dateKey(Date.now())+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
+ a.href=url;a.download='青禾云课签到-虚构测试数据-'+m.dateKey(Date.now())+'.csv';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)
  announce('已导出当前筛选范围的虚构测试记录。')
 })
 window.addEventListener('storage',e=>{if(e.key===key||e.key===null)location.reload()})

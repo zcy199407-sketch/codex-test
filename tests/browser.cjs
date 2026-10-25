@@ -13,7 +13,9 @@ async function main(){
   const page=await browser.newPage({viewport:{width:1440,height:1100},acceptDownloads:true}),errors=[]
   page.on('pageerror',e=>errors.push(e.message))
   await page.goto('http://127.0.0.1:8766/'+entry)
-  assert.equal(await page.title(),'文化宫公益培训班签到系统')
+  assert.equal(await page.title(),'青禾云课')
+  assert.equal(await page.locator('.system-name').textContent(),'青禾云课')
+  assert.ok(!(await page.locator('body').innerText()).includes('文化宫'))
   assert.equal(await page.locator('#course-sign').isDisabled(),true)
   assert.equal(await page.locator('#total').textContent(),'0')
   await page.locator('input[value=calligraphy]').check()
@@ -44,6 +46,7 @@ async function main(){
   const csv=Buffer.concat(chunks).toString('utf8')
   assert.match(csv,/舞蹈/);assert.ok(!csv.includes('书法'));assert.ok(csv.startsWith('\ufeff'))
   assert.ok(download.suggestedFilename().includes('虚构测试数据'))
+  assert.ok(download.suggestedFilename().startsWith('青禾云课签到-'))
   await page.locator('#filter').selectOption('all')
   await page.screenshot({path:'/tmp/culture-admin.png',fullPage:true})
   await page.locator('#student-view').click()
